@@ -135,11 +135,15 @@ class SongPlayerService:
             full_remote_path = os.path.join(base_dest_path, subfolder)
 
             subprocess.run(
-                ["ssh", f"{device_name}@{ip}", f"mkdir -p {full_remote_path}"]
+                ["ssh", "-o", "StrictHostKeyChecking=accept-new", "-o", "ConnectTimeout=5",
+                 f"{device_name}@{ip}", f"mkdir -p {full_remote_path}"],
+                timeout=15
             )
 
             dest = f"{device_name}@{ip}:{full_remote_path}"
-            cmd  = ["rsync", "-avz", "--delete", "-e", "ssh", src, dest]
+            cmd  = ["rsync", "-avz", "--delete",
+                    "-e", "ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5",
+                    src, dest]
 
             try:
                 subprocess.run(cmd, check=True)
@@ -153,7 +157,8 @@ class SongPlayerService:
     def remote_play_playlist(self, ip, device_name, playlist_name):
         """ Commande le MPD distant pour charger et lire une playlist précise """
         remote_cmd = f"mpc clear && mpc load {playlist_name} && mpc play"
-        ssh_cmd    = ["ssh", f"{device_name}@{ip}", remote_cmd]
+        ssh_cmd    = ["ssh", "-o", "StrictHostKeyChecking=accept-new", "-o", "ConnectTimeout=5",
+                      f"{device_name}@{ip}", remote_cmd]
 
         try:
             subprocess.run(ssh_cmd, check=True)

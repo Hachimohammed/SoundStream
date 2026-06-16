@@ -55,6 +55,7 @@ if __name__ == "__main__":
         print("Base de données prête.")
 
   
-    sps.start_background_scheduler()
+    if not app.debug or os.environ.get('WERKZEUG_RUN_MAIN') == 'true':
+        sps.start_background_scheduler()
 
     app.run(host="0.0.0.0", port=8000, debug=True)
