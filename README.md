@@ -16,21 +16,21 @@
 
 ###  Compétence 5 : Analyse de l'existant
 
-* **[Critères d'analyse](/SoundStream/00-Documents/Compétence5_S4/Critères_d’analyse.pdf)**
+*  **[Critères d'analyse](00-Documents/Compétence5_S4/Critères_d’analyse.pdf)**
 
 Voici les rapports d'analyse des différents projets (un document par projet) :
 
-* **Projet du groupe S3 Neptune B :** [Rapport d'analyse de HeyDo](/SoundStream/00-Documents/Compétence5_S4/RAPPORT_D'ANALYSE_HeyDo.pdf)
-* **Projet du groupe S3 Neptune C :** [Rapport d'analyse de SoundStream](/SoundStream/00-Documents/Compétence5_S4/nom_du_fichier.pdf) *(lien à compléter)*
-* **Projet du groupe S3 Neptune D :** [Rapport d'analyse de SoundStream](/SoundStream/00-Documents/Compétence5_S4/nom_du_fichier.pdf) *(lien à compléter)*
-* **Projet du groupe S3 Neptune E :** [Rapport d'analyse de MusiQuali](/SoundStream/00-Documents/Compétence5_S4/Rapport_analyse_MusiQuali.pdf)
+* **Projet du groupe S3 Neptune B :** [Rapport d'analyse de HeyDo](00-Documents/Compétence5_S4/RAPPORT_D'ANALYSE_HeyDo.pdf)
+* **Projet du groupe S3 Neptune C :** [Rapport d'analyse de](00-Documents/Compétence5_S4/nom_du_fichier.pdf)
+* **Projet du groupe S3 Neptune D :** [Rapport d'analyse de ](00-Documents/Compétence5_S4/nom_du_fichier.pdf)
+* **Projet du groupe S3 Neptune E :** [Rapport d'analyse de MusiQuali](00-Documents/Compétence5_S4/Rapport_analyse_MusiQuali.pdf)
 
-**Projet choisi (Neptune A) - Analyse approfondie :**
-*  **[Rapport d'analyse de SoundStream](/SoundStream/00-Documents/Compétence5_S4/Rapport_analyse_SoundStream.pdf)**
+ **Projet choisi (Neptune A) - Analyse approfondie :**
+*  **[Rapport d'analyse de SoundStream](00-Documents/Compétence5_S4/Rapport_analyse_SoundStream.pdf)**
 
 ---
 
-### 📋 Tâches à réaliser
+###  Tâches à réaliser
 
 - [ ] Ajouter le fichier Excel avant la soutenance.
 
