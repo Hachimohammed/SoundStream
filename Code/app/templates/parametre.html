@@ -8,7 +8,7 @@
     
     <div class="bento">
         <div class="divider colored" style="padding: 4vh;">
-            <h1>Edit User</h1>
+            <h1>Configuration</h1>
             
             <form method="POST" style="max-width: 600px; margin: 2vh auto;">
                 
@@ -17,28 +17,13 @@
                     <label for="username" style="display: block; margin-bottom: 0.5vh; color: white;">
                         Username :
                     </label>
-                    <input type="text" id="username" name="username" value="{{ user.username }}" readonly style="width: 100%; padding: 1vh; border-radius: 5px; border: 1px solid #ccc; background: rgba(255,255,255,0.05); color: #aaa; cursor: not-allowed;">
-                    <small style="color: #aaa; font-size: 0.9em;">Le nom d'utilisateur ne peut pas être modifié</small>
-                </div>
-                
-                <!-- Champ Rôle -->
-                <div style="margin-bottom: 2vh;">
-                    <label for="role" style="display:block; margin-bottom:0.5vh; color:white;">
-                        Role :
-                    </label>
-                    <select id="role" name="role" required style="width:100%; padding:1vh; border-radius:5px; border:1px solid #ccc; background: rgba(255,255,255,0.1); color: white;">
-                        {% for role in roles %}
-                            <option value="{{ role }}" {% if user.role == role %}selected{% endif %}>
-                                {{ role.capitalize() }}
-                            </option>
-                        {% endfor %}
-                    </select>
+                    <input type="text" id="username" name="username" value="{{ user.username }}" style="width: 100%; padding: 1vh; border-radius: 5px; border: 1px solid #ccc; background: rgba(255,255,255,0.1); color: white;">
                 </div>
                 
                 <!-- Champ Email -->
                 <div style="margin-bottom: 2vh;">
                     <label for="email" style="display: block; margin-bottom: 0.5vh; color: white;">
-                        New Email :
+                        Email :
                     </label>
                     <input type="email" id="email" name="email" value="{{ user.email }}" required style="width: 100%; padding: 1vh; border-radius: 5px; border: 1px solid #ccc; background: rgba(255,255,255,0.1); color: white;">
                 </div>
@@ -51,17 +36,17 @@
                     <input type="phone_number" id="phone_number" name="phone_number" value="{{ user.phone_number }}" required style="width: 100%; padding: 1vh; border-radius: 5px; border: 1px solid #ccc; background: rgba(255,255,255,0.1); color: white;">
                 </div>
 
-                <!-- Champ Nouveau mot de passe (optionnel) -->
+                <!-- Champ mot de passe -->
                 <div style="margin-bottom: 2vh;">
                     <label for="password" style="display: block; margin-bottom: 0.5vh; color: white;">
-                        New password (not required) :
+                        New password :
                     </label>
                     <input type="password" id="password" name="password" placeholder="Laissez vide pour ne pas changer" style="width: 100%; padding: 1vh; border-radius: 5px; border: 1px solid #ccc; background: rgba(255,255,255,0.1); color: white;">
                 </div>
 
                 <!-- Boutons -->
                 <div style="display: flex; gap: 2vh; justify-content: center; margin-top: 3vh;">
-                    <a href="{{ url_for('users', nom_orga=orga) }}" class="custom-btn btn-yellow" style="background-color: #ffee00; color: black; padding: 1.2vh 3.5vh; border: none;">Annuler</a>
+                    <a href="{{ url_for('dashboard', nom_orga=orga) }}" class="custom-btn btn-yellow" style="background-color: #ffee00; color: black; padding: 1.2vh 3.5vh; border: none;">Annuler</a>
                     
                     <button type="submit" class="custom-btn" 
                             style="background-color:#00FF44; color: black; padding: 1.2vh 3.5vh; ">
