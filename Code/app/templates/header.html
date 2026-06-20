@@ -1,0 +1,43 @@
+<header>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}"> 
+    <script src="{{ url_for('static', filename='js/header.js') }}"></script>
+
+    <div class="header">   
+        
+        <div class="headerleft">
+            <a href="/organisation"><p class="icon"> 🔉 </p></a>
+            
+            {% if session['role'] == 'admin' %}
+                <a href="/timetable/{{ orga }}" class="navbtn">CALENDAR</a>
+                <a href="/devices/{{ orga }}" class="navbtn">DEVICES</a>
+                <a href="/tickets" class="navbtn">TICKETS</a>
+                <a href="/users/{{ orga }}" class="navbtn">USERS</a>
+                <a href="/logs/{{ orga }}" class="navbtn">LOGS</a>
+                <!-- <a href="/tools/{{ orga }}" class="navbtn">TOOLS</a> -->
+
+            {% elif session['role'] == 'marketing' %}
+                <a href="/timetable/{{ orga }}" class="navbtn">CALENDAR</a>
+                <a href="/devices/{{ orga }}" class="navbtn">DEVICES</a>
+                <a href="/editTables/{{ orga }}" class="navbtn">TABLES</a>
+                <a href="/editPlaylist/{{ orga }}" class="navbtn">PLAYLISTS</a>
+                <a href="/messages_diffused/{{ orga }}" class="navbtn">LOGS</a>
+            
+            {% elif session['role'] == 'sales' %}
+                <a href="/timetable/{{ orga }}" class="navbtn">CALENDAR</a>
+                <a href="/editTables/{{ orga }}" class="navbtn">TABLES</a>
+                <a href="/editPlaylist/{{ orga }}" class="navbtn">PLAYLISTS</a>
+            {% endif %}
+        </div>
+
+        <div class="headercenter">
+            <p id="clock">Chargement...</p>
+        </div>
+
+        <div class="headerright">
+            <p class="roletext">{{ session.get('role') }} access - </p>
+            <a href="{{ url_for('logout') }}" class="logoutbtn">Logout</a>
+            <a href="/parametre"><p class="icon"> ⚙️ </p></a>
+        </div>
+
+    </div>
+</header>

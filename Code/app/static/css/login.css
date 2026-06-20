@@ -1,0 +1,75 @@
+body {
+    background-image: url("../images/Bg-Clear.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-size: 2vh;
+    margin:0px;
+}   
+
+.login p {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 1.2vh;
+    color: #ffffff;
+    margin-left: 1vh;
+    padding: 0px;
+}
+
+.login h1 {
+    margin: 0px;
+}
+
+
+label {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 1.5vh;
+    color: #ffffff;
+    margin-bottom: 10px;
+    margin-left: 1vw;
+}
+
+input{
+    color:#ffffff;
+    background-color: #ffffff47;
+    width: 20vw;
+    height: 3vh;
+    border: none;
+    border: 0.2vh solid #ffffff;
+    border-radius: 40px;
+    margin:0px;
+}
+
+h3 {
+    color: red;
+    font-size: 1.2vh;
+    margin: 0px;
+}
+
+.sublog{
+    background-color: #ffffff;
+    color:black;
+    margin:0px;
+    width: 10vw;
+    height: 3vh;
+    border: none;
+    border: 0.1vh solid #ffffff;
+    border-radius: 40px;
+    right:0px;
+}
+
+.login a {
+    color : #7a72ff;
+    text-decoration: italic, underline;
+    margin-top: 1vh;
+}

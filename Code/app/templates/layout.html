@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+		<title>{{metadata['title']}}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+    </head>
+    <body>
+        <!-- Content -->
+        {% block content %}
+		{% endblock %}
+        
+    </body>
+</html>

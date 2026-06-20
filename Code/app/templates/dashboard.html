@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}"> 
+
+    <div class="dashboard">
+        {% include 'header.html' %}
+        <div class="bento">
+            <!-- ############## ADMIN ############### -->
+            {% if session.get('role') == 'admin' %}
+                <div class="divider">
+                    {% include 'module_devices.html' %}
+                    {% include 'module_users.html' %}
+                </div>
+                <div class="divider">
+                    {% include 'module_ticket.html' %}
+                    {% include 'module_log.html' %}
+                </div>
+
+            <!-- ############## marketing ############## -->
+            {% elif session.get('role') == 'marketing' %}
+
+                <!-- Timetable module manquant de ligne (créer module timetable14 avec des changements sur le nb de ligne qd le module timetable sera fini )-->
+                {% set nb_linestot = 15 %}
+                {% include 'module_timetable.html' %}
+
+                <div class="divider">
+                    {% include 'module_devices.html' %}
+                    {% include 'module_diffused_log.html' %}
+                </div>
+            
+            <!-- ############# sales ############ -->
+            {% elif session.get('role') == 'sales' %}
+                <!-- Timetable module manquant de ligne (créer module timetable14 avec des changements sur le nb de ligne qd le module timetable sera fini )-->
+                {% set nb_linestot = 13 %}
+                {% include 'module_timetable.html' %}
+
+                <div class="divider">
+                    {% include 'module_advertisement.html' %}
+                    {% include 'module_emergency.html' %}
+                </div>
+            
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

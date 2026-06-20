@@ -1,0 +1,72 @@
+body {
+    background-image: url("../images/Bg-Clear.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.organisation {
+    font-family: 'HelveticaNeueLight', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}  
+
+.block {
+    background-color: rgba(174, 174, 174, 0.25);
+    padding: 4vh;
+    border-radius: 5vh;
+    width: 30vw; 
+    box-sizing: border-box; 
+}
+
+.block h2 {
+    font-family: 'HelveticaNeueUltraLight', sans-serif;
+    margin: 0 0 3vh 0; 
+    font-size: 4vh;
+    text-align: right;
+    color: white;
+}
+
+.block ul {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    gap: 2vh;
+    list-style: none;
+}
+
+.el {
+    background-color: rgba(174, 174, 174, 0.25);
+    padding: 2vh; 
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 2.5vh;
+    display: flex;
+    align-items: center;
+    border-radius: 3vh;
+    text-decoration: none;
+    color: white;
+    transition: background 0.2s;
+}
+
+
+
+.orgicon {
+    width: 6vh;
+    height: 6vh;
+    margin-right: 1.5vw;
+    border-radius: 50%;
+    flex-shrink: 0;
+    object-fit: cover;
+}
+
+.el:hover {
+    background-color: rgba(174, 174, 174, 0.45);
+}

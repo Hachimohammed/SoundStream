@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/edit_tables.css') }}"> 
+
+<div class="devices">
+    {% include 'header.html' %}
+    
+    <div class="bento">
+        <div class="divider">
+            <div class="divider colored">
+                <h1>Weekly Planner</h1>
+                
+                <div class="tabdiv">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Playlist Assignment</th>
+                                <th>Start Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in days_with_playlists %}
+                                <tr>
+                                    <td style="font-weight: bold; font-size: 2vh;">
+                                        {{ entry.day_name }}
+                                    </td>
+
+                                    <form action="{{ url_for('updateDay', nom_orga=orga) }}" method="POST">
+                                        <input type="hidden" name="day_name" value="{{ entry.day_name }}">
+
+                                        <td>
+                                            {% set current_playlist_id = entry.playlists[0].id_playlist if entry.playlists else None %}
+                                            
+                                            <select name="playlist_id" 
+                                                    class="btn-design" 
+                                                    onchange="this.form.submit()" 
+                                                    style="width: 95%; padding: 0.5vh; font-size: 1.8vh; height: auto;">
+                                                <option value="">-- None --</option>
+                                                
+                                                {% for p in all_playlists %}
+                                                    <option value="{{ p.id_playlist }}" 
+                                                        {% if current_playlist_id == p.id_playlist %}selected{% endif %}>
+                                                        {{ p.name }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+
+                                        <td>
+                                            {% set current_time = entry.playlists[0].start_time if entry.playlists else "08:00" %}
+                                            
+                                            <input type="time" name="start_time" 
+                                                   class="btn-design"
+                                                   value="{{ current_time }}"
+                                                   onchange="this.form.submit()"
+                                                   style="width: 90%; padding: 0.5vh; font-size: 1.8vh; height: auto;">
+                                        </td>
+                                    </form>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>   
+        </div>
+    </div>
+</div>
+
+{% endblock %}

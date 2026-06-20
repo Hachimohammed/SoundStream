@@ -1,0 +1,40 @@
+<div class="divider colored">
+<a href="{{ url_for('messages_diffused', nom_orga=orga) }}">
+
+    <h1>Messages Diffused Logs</h1>
+
+    <div class="table-scroll-container">
+    <table>
+
+        <thead>
+            <tr>
+                <th>Text</th>
+                <th>Date Logged</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% set ns = namespace(LineNb=0) %}
+            {% for el in los.getMessageDiffusedLogs() %}
+                {% if ns.LineNb < 5 %}
+                    {% set ns.LineNb = ns.LineNb + 1 %}
+                    <tr>
+                        <td> {{el['text_log']}} </td>
+                        <td> {{el['date_log']}} </td>
+                        <td> {{el['type_log']}} </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+
+            <!-- Completion of empty lines -->
+            {% for i in range(ns.LineNb, 5) %}
+                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+    </div>
+    
+</a>
+</div>

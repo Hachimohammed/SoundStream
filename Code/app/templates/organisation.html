@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/organisation.css') }}"> 
+
+    <div class="organisation">
+        {% if userorga != None %}
+            <div class ='block'>
+                <h2> Organisations </h2>
+                <ul>
+                    {% for orga in userorga %}
+                    <li>
+                        <a href="{{ url_for('dashboard', nom_orga=orga) }}" class="el">
+                            <img src="{{ url_for('static', filename='images/organisation_icon.jpg') }}" alt="Icon" class="orgicon">
+                            {{ orga }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <div class ='block'>
+                <p>You are not part of any organisation.</p>
+            </div>      
+        {% endif %}
+    </div>
+
+{% endblock %}

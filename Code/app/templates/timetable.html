@@ -1,0 +1,290 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/timetable.css') }}"> 
+
+    <div class="timetable">
+        {% include 'header.html' %}
+        <div class="bento">
+            <div class="divider colored">
+                <h1>Calendar</h1>
+
+                <div> 
+                    <!-- Ceci est la visualisation des jours de la semaine, 
+                    il sera a automatiser et simplifie dans la mesure du possible
+                    r-->
+                        <div class="calendar-wrapper" style="width: 80%; height: 70vh;">
+                        <div class="calendar-container">
+                            <div class="calendar-header"> <!-- Typiquement ajouter les dates automatiquement -->
+                                <div class="header-cell"></div>
+                                <div class="header-cell">Mon<br></div>
+                                <div class="header-cell">Tue<br></div>
+                                <div class="header-cell">Wed<br></div>
+                                <div class="header-cell">Thu<br></div>
+                                <div class="header-cell">Fri<br></div>
+                                <div class="header-cell">Sat<br></div>
+                                <div class="header-cell">Sun<br></div>
+                            </div>
+
+                            <div class="calendar-body">
+
+                                <!-- Time Column -->
+                                <div class="time-column">
+                                    {% for i in range(24) %}
+                                        <div class="time-slot">
+                                            {% if i < 10 %}
+                                                0{{ i }}:00
+                                            {% else %}
+                                                {{ i }}:00
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <!-- Monday -->
+                                <div class="day-column">
+                                    {% set daily_grid = ts.getDayGrid('Monday') %}
+
+                                    {% for i in range(24) %}
+                                        <div class="hour-slot" data-hour="{{ i }}">
+                                            {% for j in range(60) %}     
+                                                {% set current_key = "%02d:%02d"|format(i, j) %}
+                                                {% if daily_grid[current_key] %}
+                                                    {% for track in daily_grid[current_key] %}
+                                                        <div class="event" 
+                                                             data-start="{{ track.start }}" 
+                                                             data-end="{{ track.end }}"
+                                                             title="{{ track.name }}">
+                                                            {{ track.name }}
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <!-- Tuesday -->
+                                <div class="day-column">
+                                    {% set daily_grid = ts.getDayGrid('Tuesday') %}
+
+                                    {% for i in range(24) %}
+                                        <div class="hour-slot" data-hour="{{ i }}">
+                                            {% for j in range(60) %}     
+                                                {% set current_key = "%02d:%02d"|format(i, j) %}
+                                                {% if daily_grid[current_key] %}
+                                                    {% for track in daily_grid[current_key] %}
+                                                        <div class="event" 
+                                                             data-start="{{ track.start }}" 
+                                                             data-end="{{ track.end }}"
+                                                             title="{{ track.name }}">
+                                                            {{ track.name }}
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <!-- Wednesday -->
+                                <div class="day-column">
+                                    {% set daily_grid = ts.getDayGrid('Wednesday') %}
+
+                                    {% for i in range(24) %}
+                                        <div class="hour-slot" data-hour="{{ i }}">
+                                            {% for j in range(60) %}     
+                                                {% set current_key = "%02d:%02d"|format(i, j) %}
+                                                {% if daily_grid[current_key] %}
+                                                    {% for track in daily_grid[current_key] %}
+                                                        <div class="event" 
+                                                             data-start="{{ track.start }}" 
+                                                             data-end="{{ track.end }}"
+                                                             title="{{ track.name }}">
+                                                            {{ track.name }}
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <!-- Thursday -->
+                                <div class="day-column">
+                                    {% set daily_grid = ts.getDayGrid('Thursday') %}
+
+                                    {% for i in range(24) %}
+                                        <div class="hour-slot" data-hour="{{ i }}">
+                                            {% for j in range(60) %}     
+                                                {% set current_key = "%02d:%02d"|format(i, j) %}
+                                                {% if daily_grid[current_key] %}
+                                                    {% for track in daily_grid[current_key] %}
+                                                        <div class="event" 
+                                                             data-start="{{ track.start }}" 
+                                                             data-end="{{ track.end }}"
+                                                             title="{{ track.name }}">
+                                                            {{ track.name }}
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <!-- Friday -->
+                                <div class="day-column">
+                                    {% set daily_grid = ts.getDayGrid('Friday') %}
+
+                                    {% for i in range(24) %}
+                                        <div class="hour-slot" data-hour="{{ i }}">
+                                            {% for j in range(60) %}     
+                                                {% set current_key = "%02d:%02d"|format(i, j) %}
+                                                {% if daily_grid[current_key] %}
+                                                    {% for track in daily_grid[current_key] %}
+                                                        <div class="event" 
+                                                             data-start="{{ track.start }}" 
+                                                             data-end="{{ track.end }}"
+                                                             title="{{ track.name }}">
+                                                            {{ track.name }}
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <!-- Saturday -->
+                                 <div class="day-column">
+                                    {% set daily_grid = ts.getDayGrid('Saturday') %}
+
+                                    {% for i in range(24) %}
+                                        <div class="hour-slot" data-hour="{{ i }}">
+                                            {% for j in range(60) %}     
+                                                {% set current_key = "%02d:%02d"|format(i, j) %}
+                                                {% if daily_grid[current_key] %}
+                                                    {% for track in daily_grid[current_key] %}
+                                                        <div class="event" 
+                                                             data-start="{{ track.start }}" 
+                                                             data-end="{{ track.end }}"
+                                                             title="{{ track.name }}">
+                                                            {{ track.name }}
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <!-- Sunday -->
+                                <div class="day-column">
+                                    {% set daily_grid = ts.getDayGrid('Sunday') %}
+
+                                    {% for i in range(24) %}
+                                        <div class="hour-slot" data-hour="{{ i }}">
+                                            {% for j in range(60) %}     
+                                                {% set current_key = "%02d:%02d"|format(i, j) %}
+                                                {% if daily_grid[current_key] %}
+                                                    {% for track in daily_grid[current_key] %}
+                                                        <div class="event" 
+                                                             data-start="{{ track.start }}" 
+                                                             data-end="{{ track.end }}"
+                                                             title="{{ track.name }}">
+                                                            {{ track.name }}
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>   <!-- Fin du calendrier ici -->  
+
+                <div class="buttons-wrapper">
+                    <a href="/editTables/{{ orga }}" class="custom-btn btn-yellow">Edit Tables </a>
+                    <a href="/editPlaylist/{{ orga }}" class="custom-btn btn-yellow">Edit Playlists </a>
+                </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
+
+<!-- Exemple code lundi 
+    <div class="day-column">
+         <div class="hour-slot" data-hour="0"></div>
+         <div class="hour-slot" data-hour="1"></div>
+         <div class="hour-slot" data-hour="2"></div>
+         <div class="hour-slot" data-hour="3"></div>
+         <div class="hour-slot" data-hour="4"></div>
+         <div class="hour-slot" data-hour="5"></div>
+         <div class="hour-slot" data-hour="6"></div>
+         <div class="hour-slot" data-hour="7">
+             <div class="event" data-start="07:12" data-end="07:15">07:12</div>
+             <div class="event event-gray" data-start="07:34" data-end="07:38">07:34</div>
+         </div>
+         <div class="hour-slot" data-hour="8">
+             <div class="event event-violet-dark" data-start="08:05" data-end="08:08">08:05</div>
+             <div class="event" data-start="08:23" data-end="08:27">08:23</div>
+             <div class="event event-gray" data-start="08:51" data-end="08:54">08:51</div>
+         </div>
+         <div class="hour-slot" data-hour="9">
+             <div class="event" data-start="09:18" data-end="09:22">09:18</div>
+             <div class="event event-violet-dark" data-start="09:43" data-end="09:46">09:43</div>
+         </div>
+         <div class="hour-slot" data-hour="10">
+             <div class="event event-gray" data-start="10:07" data-end="10:11">10:07</div>
+             <div class="event" data-start="10:39" data-end="10:43">10:39</div>
+         </div>
+         <div class="hour-slot" data-hour="11">
+             <div class="event event-violet-dark" data-start="11:15" data-end="11:18">11:15</div>
+             <div class="event event-gray" data-start="11:47" data-end="11:52">11:47</div>
+         </div>
+         <div class="hour-slot" data-hour="12">
+             <div class="event" data-start="12:03" data-end="12:07">12:03</div>
+             <div class="event event-violet-dark" data-start="12:29" data-end="12:33">12:29</div>
+             <div class="event event-gray" data-start="12:56" data-end="12:59">12:56</div>
+         </div>
+         <div class="hour-slot" data-hour="13">
+             <div class="event" data-start="13:21" data-end="13:25">13:21</div>
+         </div>
+         <div class="hour-slot" data-hour="14">
+             <div class="event event-gray" data-start="14:08" data-end="14:11">14:08</div>
+             <div class="event event-violet-dark" data-start="14:37" data-end="14:41">14:37</div>
+         </div>
+         <div class="hour-slot" data-hour="15">
+             <div class="event" data-start="15:14" data-end="15:18">15:14</div>
+             <div class="event event-gray" data-start="15:49" data-end="15:53">15:49</div>
+         </div>
+         <div class="hour-slot" data-hour="16">
+             <div class="event event-violet-dark" data-start="16:02" data-end="16:05">16:02</div>
+             <div class="event" data-start="16:31" data-end="16:35">16:31</div>
+         </div>
+         <div class="hour-slot" data-hour="17">
+             <div class="event event-gray" data-start="17:17" data-end="17:21">17:17</div>
+             <div class="event" data-start="17:44" data-end="17:47">17:44</div>
+         </div>
+         <div class="hour-slot" data-hour="18">
+             <div class="event event-violet-dark" data-start="18:09" data-end="18:13">18:09</div>
+             <div class="event event-gray" data-start="18:38" data-end="18:42">18:38</div>
+         </div>
+         <div class="hour-slot" data-hour="19"></div>
+         <div class="hour-slot" data-hour="20"></div>
+         <div class="hour-slot" data-hour="21"></div>
+         <div class="hour-slot" data-hour="22"></div>
+         <div class="hour-slot" data-hour="23"></div>
+    </div> 
+
+-->

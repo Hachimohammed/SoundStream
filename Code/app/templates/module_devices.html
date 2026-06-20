@@ -1,0 +1,45 @@
+<div class="divider colored" style="position: relative;"> 
+<a href="{{ url_for('devices', nom_orga=orga) }}">
+
+    <h1>Devices</h1> 
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ip</th>
+                <th>Status</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% set ns = namespace(LineNb=0) %}
+            {% for el in liste_song_player %}
+                {% if ns.LineNb < 4 %}
+                    {% set ns.LineNb = ns.LineNb + 1 %}
+                    <tr>
+                        <td> {{ el['IP_adress'] }} </td>
+                        <td class="{% if el['state'] == 'ONLINE' %}green{% elif el['state'] == 'OFFLINE' %}red{% endif %}">
+                            {{ el['state'] }}
+                        </td>
+                        <td> {{ el['name_place'] }}</td>
+                    </tr>
+                {%endif%}
+            {% endfor %}
+                                    
+            <!-- Completion of empty lines -->
+            {% for i in range(ns.LineNb, 4) %}
+                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            {% endfor %}
+
+            <tr>
+                <td> Offline : <span class="red"> {{ nb_off }}</span></td>
+                <td> Playing : <span class="green"> {{ nb_on }}</span></td>
+                <td></td>
+            </tr>
+
+        </tbody>
+    </table>
+    
+</a>
+</div>

@@ -1,0 +1,51 @@
+<div class="divider colored">
+<a href="{{ url_for('tickets', nom_orga=orga) }}">
+
+    <h1>Tickets</h1>
+
+    <div class="table-scroll-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Problème</th>
+                <th>Date Ticket</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% set id_orga = ogs.getIdByName(orga) %}
+            {% set ticket_list = los.getTicketsByOrganisation(id_orga) %}
+            {% set ns = namespace(LineNb=0) %}
+
+            {% if ticket_list|length > 0 %}
+                {% for ticket in ticket_list %}
+                    {% if ns.LineNb < 5 %}
+                        {% set ns.LineNb = ns.LineNb + 1 %}
+                        <tr>
+                            <td> {{ticket['text_log']}} </td>
+                            <td> {{ticket['date_log']}} </td>
+                            <td> {{ticket['type_log']}} </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+
+            {% else %}
+                <tr>
+                    <td> Aucun ticket n'a été enregistré </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            
+            {% endif %}
+                
+            <!-- Completion of empty lines -->
+            {% for i in range(ns.LineNb, 5) %}
+                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+</a>
+</div>

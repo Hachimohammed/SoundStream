@@ -1,0 +1,75 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/devices.css') }}"> 
+
+<div class="devices">
+    {% include 'header.html' %}
+    
+    <div class="bento">
+        <div class="divider colored" style="padding: 4vh;">
+            <h1>Add a new user</h1>
+            
+            <form method="POST" style="max-width: 600px; margin: 2vh auto;">
+                
+                <!-- Nom d'utilisateur -->
+                <div style="margin-bottom: 2vh;">
+                    <label for="username" style="display: block; margin-bottom: 0.5vh; color: white;">
+                        Username :
+                    </label>
+                    <input type="text" id="username" name="username" required
+                        style="width:100%; padding:1vh; border-radius:5px; border:1px solid #ccc; background: rgba(255,255,255,0.1); color: white;">
+                    <small style="color: #aaa; font-size: 0.9em;">Le nom d'utilisateur ne pourra pas être modifié</small>
+                </div>
+
+                <!-- Email -->
+                <div style="margin-bottom: 2vh;">
+                    <label for="email" style="display: block; margin-bottom: 0.5vh; color: white;">
+                        Email :
+                    </label>
+                    <input type="email" id="email" name="email" required
+                        style="width:100%; padding:1vh; border-radius:5px; border:1px solid #ccc; background: rgba(255,255,255,0.1); color: white;">
+                    <small style="color: #aaa; font-size: 0.9em;">Utilisé pour contacter l'utilisateur lors d'oubli de mot de passe</small>
+                </div>
+                
+                <!-- Rôle -->
+                <div style="margin-bottom: 2vh;">
+                    <label for="role" style="display:block; margin-bottom:0.5vh; color:white;">
+                        Role :
+                    </label>
+                    <select id="role" name="role" required
+                        style="width:100%; padding:1vh; border-radius:5px; border:1px solid #ccc; background: rgba(255,255,255,0.1); color: white;">
+                        {% for role in roles %}
+                            <option value="{{ role }}">{{ role.capitalize() }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <!-- Mot de passe -->
+                <div style="margin-bottom: 2vh;">
+                    <label for="password" style="display: block; margin-bottom: 0.5vh; color: white;">
+                        Password :
+                    </label>
+                    <input type="password" id="password" name="password" required
+                        style="width: 100%; padding: 1vh; border-radius: 5px; border: 1px solid #ccc; background: rgba(255,255,255,0.1); color: white;">
+                </div>
+                
+                <!-- Boutons -->
+                <div style="display: flex; gap: 2vh; justify-content: center; margin-top: 3vh;">
+                    <a href="{{ url_for('users', nom_orga=orga) }}" class="custom-btn btn-yellow"
+                        style="background-color: #ffee00; color: black; padding: 1.2vh 3.5vh; border: none;">Annuler</a>
+                    <button type="submit" class="custom-btn" 
+                        style="background-color:#00FF44; color: black; padding: 1.2vh 3.5vh;">
+                        Save
+                    </button>
+                </div>
+                
+            </form>
+            {% if message %}
+                <h3 class="error" id="error">{{ message }}</h3>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

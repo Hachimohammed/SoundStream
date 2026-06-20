@@ -1,0 +1,30 @@
+<div class="divider colored">
+<a href="{{ url_for('timetable', nom_orga=orga) }}">
+
+    <h1>Calendar</h1>
+    
+    <table>
+        <tbody>
+            <tr><td>...</td></tr>
+
+            {% set ns = namespace(LineNb=0) %}
+            {% for el in tts.getNextTracks()  %}
+                {% if ns.LineNb < nb_linestot %}
+                    {% set ns.LineNb = ns.LineNb + 1 %}
+                    <tr>
+                        <td> {{el['name']}} </td>
+                    </tr>
+                {%endif%}
+            {% endfor %}
+                                    
+            <!-- Completion of empty lines -->
+            {% for i in range(ns.LineNb, nb_linestot) %}
+                <tr><td>&nbsp;</td></tr>
+            {% endfor %}
+                                
+           <tr><td>...</td></tr>
+        </tbody>
+    </table>
+                        
+</a>
+</div>

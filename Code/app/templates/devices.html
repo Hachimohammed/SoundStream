@@ -1,0 +1,177 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/devices.css') }}"> 
+
+    <div class="devices">
+        {% include 'header.html' %}
+        <div class="bento">
+            <div class="divider colored">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1vh;">
+                    <h1>Devices</h1>
+                    {% if session.get('role') == 'admin' %}
+                    <button id="sync-all-btn" onclick="syncAll()"
+                        class="custom-btn btn-green"
+                        style="padding: 0.8vh 2vh; cursor: pointer;">
+                         Sync All
+                    </button>
+                    {% endif %}
+                </div>
+
+                <!-- Barre de progression sync -->
+                <div id="sync-progress" style="display:none; margin-bottom: 1vh;">
+                    <p id="sync-status" style="color: #aaa; font-size: 0.9em;">Synchronisation en cours...</p>
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 5px; height: 8px; width: 100%;">
+                        <div id="sync-bar" style="background: #00FF44; height: 8px; border-radius: 5px; width: 0%; transition: width 0.5s;"></div>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ip</th>
+                            <th>Status</th>
+                            <th>Location</th>
+                            {% if session.get('role') in ['admin'] %}
+                                <th>Actions</th>
+                            {% else %}
+                                <th>Postcode</th>
+                                <th>Building</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set ns = namespace(LineNb=0) %}
+                        {% for el in liste_song_player %}
+                            {% if ns.LineNb < 11 %}
+                                {% set ns.LineNb = ns.LineNb + 1 %}
+                                <tr>
+                                    <td> {{ el['IP_adress'] }} </td>
+                                    <td id="status-{{ el['id_player'] }}" class="{% if el['state'] == 'ONLINE' %}green{% elif el['state'] == 'OFFLINE' %}red{% endif %}">
+                                        {{ el['state'] }}
+                                    </td>
+                                    <td> {{ el['name_place'] }}</td>
+                                    {% if session.get('role') in ['admin'] %}
+                                        <td class="actions-cell">
+                                            <div class="buttons-wrapper">
+                                                <a href="/delete/{{ el['id_player'] }}" class="custom-btn btn-red" onclick="return confirm('Confirm deletion?')">Delete</a>
+                                                <a href="/update/{{ el['id_player'] }}" class="custom-btn btn-yellow" onclick="return confirm('Confirm update?')">Update</a>
+                                                <a href="/edit/{{ el['id_player'] }}" class="custom-btn btn-green">Edit</a>
+                                            </div>
+                                        </td>
+                                    {% elif session.get('role') in ['marketing'] %}
+                                        <td>{{ el['place_postcode'] }}</td>
+                                        <td>{{ el['place_building_name'] }}</td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        {% if session.get('role') in ['admin'] %}
+                            <tr>
+                                <td class="actions-cell">
+                                    <div class="buttons-wrapper">
+                                        <a href="/addPlayer" class="custom-btn-add btn-green">Add Player</a>
+                                    </div>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        {% endif %}
+
+                        <!-- Completion of empty lines -->
+                        {% for i in range(ns.LineNb, 11) %}
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                {% if session.get('role') in ['marketing'] %}
+                                    <td>&nbsp;</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td> Offline : <span class="red"> {{ nb_off }}</span></td>
+                            <td> Playing : <span class="green"> {{ nb_on }}</span></td>
+                            <td><p style="font-size: 0.8em; font-style: italic; margin-bottom: 10px; color: gray;"> Last auto-update: <span id="last-update-time">--:--:--</span></p></td>
+                            <td>&nbsp;</td>
+                            {% if session.get('role') in ['marketing'] %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const orga_name = "{{orga}}".trim();
+
+    // Auto-refresh des statuts toutes les 25 secondes
+    function refreshStatuses() {
+        fetch(`/auto_update_status/${orga_name}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(device => {
+                    const statusTd = document.getElementById(`status-${device.id_player}`);
+                    if (statusTd) {
+                        statusTd.textContent = device.state;
+                        if (device.state === 'ONLINE') {
+                            statusTd.className = 'green';
+                        } else if (device.state === 'OFFLINE') {
+                            statusTd.className = 'red';
+                        }
+                    }
+                });
+                const now = new Date();
+                document.getElementById('last-update-time').textContent =
+                    `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+            })
+            .catch(err => console.error("Erreur auto-update:", err));
+    }
+
+    setInterval(refreshStatuses, 25000);
+
+    // Synchronisation globale de tous les devices ONLINE
+    function syncAll() {
+        const btn = document.getElementById('sync-all-btn');
+        const progressDiv = document.getElementById('sync-progress');
+        const syncStatus = document.getElementById('sync-status');
+        const syncBar = document.getElementById('sync-bar');
+
+        // Afficher la barre de progression
+        btn.disabled = true;
+        btn.textContent = ' En cours...';
+        progressDiv.style.display = 'block';
+        syncBar.style.width = '30%';
+        syncStatus.textContent = 'Connexion aux devices...';
+
+        fetch(`/sync_all/${orga_name}`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                syncBar.style.width = '100%';
+                syncBar.style.background = data.fail > 0 ? '#ffee00' : '#00FF44';
+                syncStatus.textContent =
+                    ` ${data.success} device(s) synchronisé(s) avec succès` +
+                    (data.fail > 0 ? ` —  ${data.fail} échec(s)` : '');
+                btn.disabled = false;
+                btn.textContent = ' Sync All';
+
+                // Masquer après 5 secondes
+                setTimeout(() => {
+                    progressDiv.style.display = 'none';
+                    syncBar.style.width = '0%';
+                }, 5000);
+            })
+            .catch(err => {
+                syncStatus.textContent = ' Erreur lors de la synchronisation';
+                syncBar.style.background = 'red';
+                btn.disabled = false;
+                btn.textContent = ' Sync All';
+                console.error("Erreur sync all:", err);
+            });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,184 @@
+body {
+    background-image: url("../images/bg-Dark.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-size: 2vh;
+    margin:0px;
+} 
+a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.bento {
+    display: flex;
+    height: 92vh;
+    width: 100vw;
+    gap: 2vh;
+    padding: 2vh;
+    box-sizing: border-box;
+}
+.divider {
+    display: flex;
+    flex-direction: column; 
+    gap: 2vh; 
+    flex: 1;
+    box-sizing: border-box;
+}
+.colored{
+    background-color: rgba(217, 217, 217, 0.09);
+    flex: 1;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+h1 {
+    color: white;
+    font-family: 'HelveticaNeueUltraLight';
+    text-align: right;
+    margin-right: 4vh;
+    margin-bottom: -1vh;
+    padding-top: 2vh;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0px;
+    margin-top: 2vh;
+}
+/* Style des cellules pour aérer un peu */
+td, th {
+    padding: 1.5vh;
+    text-align: left;
+    font-size: 2.15vh;
+}
+thead tr:nth-child(odd) {
+    background-color: rgba(217, 217, 217, 0.09);
+}
+tbody {
+    font-family: 'HelveticaNeueThin';
+}
+tbody tr:nth-child(even) {
+    background-color: rgba(217, 217, 217, 0.09);
+}
+tbody tr:nth-child(odd) {
+    background-color: rgba(217, 217, 217, 0.05);
+}
+.green{
+    color:#00FF44;
+}
+.red{
+    color:#FF0004;
+}
+/* 
+####################
+## Upload section ##
+####################
+*/
+.form {
+    display: flex;
+    flex-direction: column;
+    padding:3vw;
+    font-size: 2.5vh;
+    font-family: HelveticaNeueLight;
+}
+.input-hidden {
+    display: none;
+}
+.uploadfile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    margin-bottom: 1vh;
+}
+.btn-design {
+    background-color: #FFFFFF16; 
+    color: white;
+    border-radius: 5vw;
+    padding: 1.5vh;
+    width: 50%;
+    text-align: center;
+    font-family: HelveticaNeueLight;
+    
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color 0.2s;
+}
+.btn-design:hover {
+    background-color: #FFFFFF22;
+}
+.form p {
+    padding: 0vh;
+    margin: 0vh;
+}
+.btn-upload {
+    background-color: #ffffff; 
+    color: black;
+    border-radius: 5vw; 
+    padding: 1.5vh;
+    font-size: 2.25vh;
+    width: 25%;
+    text-align: center;
+    align-self: flex-end;
+    cursor: pointer;
+    display: block;
+    transition: background-color 0.2s;
+    
+    border: none; 
+    outline: none;
+}
+.btn-upload:hover {
+    background-color: #FFFFFF22;
+}
+.inputs-row {
+    display: flex;
+    gap: 10px; 
+    justify-content: flex-start;
+}
+.input-pill {
+    background-color: #FFFFFF16; 
+    color: white;
+    border-radius: 5vw; 
+    padding: 1.5vh 2vw;
+    font-size: 2vh;
+    
+    border: none;
+    outline: none;
+    font-family: HelveticaNeueLight;    
+    color-scheme: dark; 
+    
+    cursor: text;
+    transition: background-color 0.2s;
+}
+.input-pill:focus {
+    background-color: #FFFFFF22; 
+}
+
+.table-scroll-container {
+    max-height: 30.5vh; /* Hauteur maximale avant d'activer le défilement */
+    overflow-y: auto;        
+    width: 100%;
+    margin-top:2vh;
+}
+
+.table-scroll-container th {
+    margin-top:-2vh;
+    position: sticky;
+    z-index: 10;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1); /* Petit ombrage pour l'effet de profondeur */
+}

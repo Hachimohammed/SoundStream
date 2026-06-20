@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/users.css') }}">
+
+<div class="devices">
+    <div class="bento">
+        <div class="divider colored" style="padding: 4vh;">
+            <h1>Mot de passe oublié</h1>
+
+            <form method="POST" style="max-width: 600px; margin: 2vh auto;">
+
+                <div style="margin-bottom: 2vh;">
+                    <label for="email" style="display: block; margin-bottom: 0.5vh; color: white;">
+                        Votre adresse email :
+                    </label>
+                    <input type="email" id="email" name="email" required
+                        style="width:100%; padding:1vh; border-radius:5px; border:1px solid #ccc; background: rgba(255,255,255,0.1); color: white;">
+                    <small style="color: #aaa;">Un nouveau mot de passe vous sera envoyé par mail</small>
+                </div>
+
+                {% if error %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endif %}
+                
+                {% if success %}
+                    <p style="color: #00FF44;">{{ success }}</p>
+                    <a href="https://mail.google.com" target="_blank" class="custom-btn btn-gmail">
+                        <img src="https://www.google.com/favicon.ico" alt="Gmail" style="width: 35px; height: 35px; vertical-align: middle; margin-right: 8px;">
+                        Gmail
+                    </a>
+                    <a href="https://outlook.live.com" target="_blank" class="custom-btn btn-outlook">
+                        <img src="https://img.icons8.com/?size=100&id=gfladD7prcwv&format=png&color=000000" alt="Outlook" style="width: 40px; height: 40px; vertical-align: middle; margin-right: 8px;">
+                        Outlook
+                    </a>
+                    <a href="https://www.yahoo.com/intl/fr_fr/mail" target="_blank" class="custom-btn btn-yahoo">
+                        <img src="https://www.yahoo.com/favicon.ico" alt="Yahoo Mail" style="width: 30px; height: 30px; vertical-align: middle; margin-right: 8px;">
+                        Yahoo
+                    </a>
+                {% endif %}
+
+                <div style="display: flex; gap: 2vh; justify-content: center; margin-top: 3vh;">
+                    <a href="{{ url_for('login') }}" class="custom-btn btn-yellow"
+                        style="background-color: #ffee00; color: black; padding: 1.2vh 3.5vh;">
+                        Retour à la page de connexion
+                    </a>
+                    <button type="submit" class="custom-btn"
+                        style="background-color:#00FF44; color: black; padding: 1.2vh 3.5vh;">
+                        Envoyer
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,249 @@
+body {
+    background-image: url("../images/bg-Dark.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-size: 2vh;
+    margin:0px;
+} 
+a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.bento {
+    display: flex;
+    height: 92vh;
+    width: 100vw;
+    gap: 2vh;
+    padding: 2vh;
+    box-sizing: border-box;
+}
+.divider {
+    display: flex;
+    flex-direction: column; 
+    gap: 2vh; 
+    flex: 1;
+    box-sizing: border-box;
+}
+.colored{
+    background-color: rgba(217, 217, 217, 0.09);
+    flex: 1;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+h1 {
+    color: white;
+    font-family: 'HelveticaNeueUltraLight';
+    text-align: right;
+    margin-right: 4vh;
+    margin-bottom: -1vh;
+    padding-top: 2vh;
+}
+h3 {
+    margin:0px 4vh -1vh 0px;
+    padding:0px;
+    color: rgb(161, 161, 161);
+    font-family: 'HelveticaNeueUltraLight';
+    text-align: right;
+}
+
+.tabdiv{
+    overflow-y: auto;
+    gap:0px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2vh 0px 0px 0px;
+}
+
+thead{
+    position: sticky; 
+    top: 0;
+    z-index: 10;
+    --webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+td, th {
+    padding: 1.5vh;
+    text-align: left;
+    font-size: 2.15vh;
+}
+thead tr:nth-child(odd) {
+    background-color: rgba(217, 217, 217, 0.09);
+}
+tbody {
+    font-family: 'HelveticaNeueThin';
+}
+tbody tr:nth-child(even) {
+    background-color: rgba(217, 217, 217, 0.09);
+}
+tbody tr:nth-child(odd) {
+    background-color: rgba(217, 217, 217, 0.05);
+}
+
+.actions-cell {
+    padding: 1vh !important;
+}
+
+.buttons-wrapper {
+    display: flex;
+    gap: 1vh;
+    justify-content: left;
+    align-items: center;
+    max-width: 5vw;
+}
+
+.custom-btn {
+    padding: 1.2vh 3.5vh;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 2vh;
+    text-align: left;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-red {
+    background-color: #FF0000;
+    gap:2vh;
+    color: white;
+}
+
+.btn-red:hover {
+    background-color: #CC0000;
+}
+
+/* 
+####################
+## Upload section ##
+####################
+*/
+.form {
+    display: flex;
+    flex-direction: column;
+    padding:0.5vw 3vw ;
+    font-size: 2.5vh;
+    font-family: HelveticaNeueLight;
+}
+.input-hidden {
+    display: none;
+}
+
+.uploadfile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    margin-bottom: 1vh;
+}
+.btn-design {
+    background-color: #FFFFFF16; 
+    color: white;
+    border-radius: 5vw;
+    padding: 1.5vh;
+    width: 50%;
+    text-align: center;
+    font-family: HelveticaNeueLight;
+    font-size: 2.25vh;;
+    border:none;
+    
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color 0.2s;
+}
+.btn-design:hover {
+    background-color: #FFFFFF22;
+}
+
+.btn-upload {
+    background-color: #ffffff; 
+    color: black;
+    border-radius: 5vw; 
+    padding: 1.5vh;
+    font-size: 2.25vh;
+    width: 25%;
+    text-align: center;
+    align-self: flex-end;
+    cursor: pointer;
+    display: block;
+    transition: background-color 0.2s;
+    
+    border: none; 
+    outline: none;
+}
+
+.btn-upload:hover {
+    background-color: #FFFFFF22;
+}
+
+option {
+    width:25%
+}
+
+.misc {
+    display: flex;
+    flex-direction: column;
+    font-family: HelveticaNeueLight;
+}
+
+.misc p { 
+    margin: 1vh 0px 0px 2vh;
+}
+
+.misc  strong {
+    font-family: HelveticaNeue;
+    color: #adadad;
+}
+
+.info-text {
+    font-family: HelveticaNeueLight;
+    color: #adadad;
+    margin: 2vh 4vh;
+    text-align: left;
+}
+
+.mini {
+    font-size: 2vh;
+    border-radius: 2vw; 
+    padding: 1vh;
+    width: 25%;
+    margin: bottom 1vh; ;
+    margin-left: 1vw;
+    border: none;
+}
+
+.choice-playlist {
+        display: flex;
+        flex-direction: column; 
+        gap: 1vh; 
+        margin-left:1vw;
+}
+
+.miniform {
+    display: flex;
+    flex-direction: row; 
+    align-items: center; 
+    gap: 10px;
+}
+
+.deleteplst {
+    margin-top:1vh;
+}

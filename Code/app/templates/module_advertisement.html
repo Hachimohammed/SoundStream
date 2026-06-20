@@ -1,0 +1,23 @@
+<div class="divider colored">  
+
+    <h1>Upload Advertisement Message</h1>
+
+    <form action="{{url_for('advertisement', nom_orga=orga)}}" method="POST" enctype="multipart/form-data" class="form">
+        <div class="uploadfile">
+            <input type="file" id="file" name="uploadfile" accept=".mp3" class="input-hidden">
+
+            <label for="file" class="btn-design"> Choose file </label>
+
+            <div id="file-name" style="margin-top: 10px; color: #aaa; font-size: 0.9em;"></div>
+        </div>
+
+        <div>
+            <p> When ? </p>
+            <input type="time" id="heure_event" name="heure_choisie" class="input-pill" required>
+            <input type="date" id="date_event" name="date_choisie" class="input-pill" required>
+        </div>
+
+        <button type="submit" class="btn-upload"> Upload </button>
+    </form>
+
+</div>

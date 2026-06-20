@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/logs.css') }}"> 
+
+    <div class="logs">
+        {% include 'header.html' %}
+        <div class="bento">
+            <div class="divider colored">
+                <div style="display: flex; align-items: center; margin-bottom: 1vh;">
+                    <h1>Logs</h1>
+                    
+                    <form method="get" action="{{ url_for('logs', nom_orga=orga) }}">
+                        <!-- Type de logs à afficher -->
+                        <div style="display: flex; flex-direction: horizontal; margin-left: 1vh; margin-top: 2vh;">
+                            <label for="type" style="display:block; margin-top:1.4vh; margin-bottom:0.5vh; margin-right: 1vh; color:white;">
+                                Type : 
+                            </label>
+                            <select id="type" name="type" onchange="this.form.submit();" style="padding:1vh; border-radius:5px; border:1px solid #ccc; background: rgba(255,255,255,0.1); color: white;">
+                                {% for type in types %}
+                                    <option value="{{ type }}" {% if selected_type == type %}selected{% endif %}>
+                                        {{ type.capitalize() }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </form>
+
+                    <!-- Bouton d'export CSV -->
+                    <a href="{{ url_for('export_logs_csv', nom_orga=orga) }}" 
+                       class="custom-btn btn-green"
+                       style="padding: 0.8vh 2vh; text-decoration: none; margin-left: auto;">
+                        Export CSV
+                    </a>
+                </div>
+
+                <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Text</th>
+                            <th>Date Logged</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in log_list %}
+                            {% if log.text_log and log.date_log and log.type_log %}
+                                <tr>
+                                    <td>{{log.text_log}}</td>
+                                    <td>{{log.date_log}}</td>
+                                    <td>{{log.type_log}}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td> Good news, there is no logs :) </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

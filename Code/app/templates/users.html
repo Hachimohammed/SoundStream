@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/users.css') }}"> 
+
+
+    <div class="devices">
+        {% include 'header.html' %}
+        <div class="bento">
+            <div class="divider colored">
+                        <h1>Users</h1>
+                        {% if "supprimé avec succès" in message %}
+                            <h3 class="success green" id="success">{{ message }}</h3>
+                        {% elif message == "Vous ne pouvez pas supprimer un utilisateur avec un rôle admin" %}
+                            <h3 class="error red" id="error">{{ message }}</h3>
+                        {% elif "succès" in message %}
+                            <h3 class="success green" id="success">{{ message }}</h3>
+                        {% endif %}
+                        <table>
+                            
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% set ns = namespace(LineNb=0) %}
+                                {% for el in us.findUsersInOrganisation(orga) %}
+                                    {% if ns.LineNb < 12 %}
+                                        {% set ns.LineNb = ns.LineNb + 1 %}
+                                        <tr>
+                                            <td> {{el}} </td>
+                                            <td> {{ us.findByUsername(el)['role']}}</td>
+                                            <td class="actions-cell">
+                                                <div class="buttons-wrapper">
+                                                    <a href="/deleteUsn/{{ el }}" class="custom-btn btn-red" onclick="return confirm('Confirm deletion?')">Delete</a>
+                                                    <a href="/editUsn/{{ el }}" class="custom-btn btn-yellow">Edit</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {%endif%}
+                                {% endfor %}
+                                <tr>
+                                    <td class = "actions-cell">
+                                        <div class ="buttons-wrapper">
+                                            <a href="/addUser" class="custom-btn-add btn-green">Add User</a>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <!-- Completion of empty lines -->
+                                {% for i in range(ns.LineNb, 12) %}
+                                    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+            </div>
+        </div>
+        {% endblock %}

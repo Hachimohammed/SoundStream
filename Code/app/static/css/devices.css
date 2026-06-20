@@ -1,0 +1,156 @@
+body {
+    background-image: url("../images/bg-Dark.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.devices {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-size: 2vh;
+    margin:0px;
+} 
+
+.bento {
+    display: flex;
+    height: 92vh;
+    width: 100vw;
+
+    gap: 2vh;
+    padding: 2vh;
+    box-sizing: border-box;
+}
+
+.divider {
+    display: flex;
+    flex-direction: column; 
+    gap: 2vh; 
+    flex: 1;
+    box-sizing: border-box;
+}
+
+.colored{
+    background-color: rgba(217, 217, 217, 0.09);
+    flex: 1;
+    border-radius: 25px;
+}
+
+h1 {
+    color: white;
+    font-family: 'HelveticaNeueUltraLight';
+    text-align: right;
+    margin-right: 4vh;
+    margin-bottom: -1vh;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0px;
+}
+
+/* Style des cellules pour aérer un peu */
+td, th {
+    padding: 1.5vh;
+    text-align: left;
+    font-size: 2.15vh;
+}
+
+thead tr:nth-child(odd) {
+    background-color: rgba(217, 217, 217, 0.09);
+}
+
+tbody {
+    font-family: 'HelveticaNeueThin';
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgba(217, 217, 217, 0.09);
+}
+
+tbody tr:nth-child(odd) {
+    background-color: rgba(217, 217, 217, 0.05);
+}
+
+.green{
+    color:#00FF44;
+}
+
+.red{
+    color:#FF0004;
+}
+
+ /* 
+####################
+## Button section ##
+####################
+*/
+
+/* Styles pour les boutons Delete et Update */
+.actions-cell {
+    padding: 1vh !important;
+}
+
+.buttons-wrapper {
+    display: flex;
+    gap: 1vh;
+    justify-content: left;
+    align-items: center;
+}
+
+.custom-btn {
+    padding: 1.2vh 3.5vh;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 2vh;
+    text-align: left;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.custom-btn-add {
+    padding: 1.2vh 3.5vh;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 2vh;
+    text-align: left;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    margin-right: -70px;
+}
+
+.btn-red {
+    background-color: #FF0000;
+    color: white;
+}
+
+.btn-red:hover {
+    background-color: #CC0000;
+}
+
+.btn-yellow {
+    background-color: #FFFF00;
+    color: #000000;
+}
+
+.btn-yellow:hover {
+    background-color: #CCCC00;
+}
+
+.btn-green {
+    background-color: #00FF44;
+    color: #000000;
+}
+
+.btn-green:hover {
+    background-color: #00CC36;
+}

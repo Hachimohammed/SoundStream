@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/logs.css') }}"> 
+
+
+    <div class="logs">
+        {% include 'header.html' %}
+        <div class="bento">
+            <div class="divider colored">
+                        <h1>Message Diffused Logs</h1>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Text</th>
+                                    <th>Date Diffused</th>
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for message in message_list %}
+                                <tr>
+                                    <td>{{message.text_log}}</td>
+                                    <td>{{message.date_log}}</td>
+                                    <td>{{message.type_log}}</td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td> No messages has been saved </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
