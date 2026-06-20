@@ -65,6 +65,7 @@ class UserController :
             new_password = request.form.get('password')
             new_role = request.form.get('role')
             new_email = request.form.get('email')
+            new_phone_number = request.form.get('phone_number')
 
             message = ""
             
@@ -84,7 +85,10 @@ class UserController :
             if not orga_name:
                 orga_name = 'default'
 
-            
+            # Récupérer tous les numéros de téléphone pour validation
+            existing_phone_number = [user.phone_number for user in us.findAll()]
+            existing_phone_number.remove(us.findByUsername(username).phone_number)
+
             # Vérification du rôle
             if not new_role or new_role not in available_roles:
                 return "Erreur : Rôle invalide", 400
@@ -118,12 +122,11 @@ class UserController :
                 if new_email != us.findByUsername(username).email:
                     us.udao.updateEmail(username, new_email)
                     log.ldao.createLog("EDIT",
-                                        f"L'email de l'utilisateur {username} a été changé en {new_email} par {user_name_session}",
+                                        f"L'email de l'utilisateur {username} a été changé en '{new_email}' par {user_name_session}",
                                         datetime.datetime.now(),
                                         orga_id
                                     )
                     message = "Utilisateur modifié avec succès."
-                return redirect(url_for('users', nom_orga=orga_name, message=message))
             else:
                 if not match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', new_email):
                     message = "Email non valide"
@@ -133,16 +136,40 @@ class UserController :
                             user_with_email = user.username
                             break
                     
-                    message = "Le nouvel email est similaire à un email existant (utilisé par " + user_with_email + ")"
+                    message = f"Le nouvel email est similaire à un email existant (utilisé par {user_with_email})"
             
-            
-            return render_template('edit_user.html',
-                                    metadata={'title': 'Modifier Utilisateur'},
-                                    user=us.findByUsername(username),
-                                    orga=orga_name,
-                                    roles=available_roles,
-                                    message=message
+
+            # Mise à jour du numéro de téléphone
+            if new_phone_number not in existing_phone_number :
+                if new_phone_number != us.findByUsername(username).phone_number :
+                    us.udao.updatePhoneNumber(username, new_phone_number)
+                    log.ldao.createLog("EDIT",
+                                        f"Le numéro de l'utilisateur {username} a été modifié en '{new_phone_number}' par {user_name_session}",
+                                        datetime.datetime.now(),
+                                        orga_id
                                     )
+                    if not "similaire" in message :
+                        message = "Utilisateur modifié avec succès."
+            else:
+                if new_phone_number in existing_phone_number :
+                    for user in us.findAll() :
+                        if user.phone_number == new_phone_number :
+                            user_with_phone_number = user.username
+                            break
+                    
+                    message = f'Le nouveau numéro de téléphone est similaire à un numéro existant (utilisé par "{user_with_phone_number}")'
+
+            if message == "Utilisateur modifié avec succès." :
+                metadata={'title': 'Users'}
+                return render_template('users.html', metadata=metadata, ogs=ogs, us=us, message=message, orga=orga_name)
+            else :
+                return render_template('edit_user.html',
+                                        metadata={'title': 'Modifier Utilisateur'},
+                                        user=us.findByUsername(username),
+                                        orga=orga_name,
+                                        roles=available_roles,
+                                        message=message
+                                        )
         
         else:
             # AFFICHAGE DU FORMULAIRE (GET)
@@ -312,8 +339,8 @@ class UserController :
         if request.method == 'POST':
             # Récupération des données du formulaire
             new_password = request.form.get('password')
-            new_role = request.form.get('role')
             new_email = request.form.get('email')
+            new_phone_number = request.form.get('phone_number')
 
             message = ""
 
@@ -329,37 +356,26 @@ class UserController :
 
             # Récupérer l'organisation pour redirection
             orga_name = session.get('organisation_name')
+
+            # Récupérer tous les numéros de téléphone pour validation
+            existing_phone_number = [user.phone_number for user in us.findAll()]
+            existing_phone_number.remove(us.findByUsername(username).phone_number)
             
             if not orga_name:
                 orga_name = 'default'
 
             
-            # Vérification du rôle
-            if not new_role or new_role not in available_roles:
-                return "Erreur : Rôle invalide", 400
+            orga_id = session.get('organisation_name')
             
 
             # Mise à jour du mot de passe si fourni
             if new_password and new_password.strip():
                 us.udao.changePassword(username, new_password)
-            
-
-            user_name_session = session.get('username')
-            orga_id = session.get('organisation_name')
-            log.ldao.createLog("EDIT",
-                               f"Le mot de passe de l'utilisateur {username} a été changé par {user_name_session}",
-                               datetime.datetime.now(),
-                               orga_id
-                            )
-            
-
-            # Mise à jour du rôle
-            us.udao.updateUserRole(username, new_role)
-            log.ldao.createLog("EDIT",
-                               f"Le rôle de l'utilisateur {username} a été changé en {new_role} par {user_name_session}",
-                               datetime.datetime.now(),
-                               orga_id
-                            )
+                log.ldao.createLog("EDIT",
+                                   f"{username} a modifié son mot de passe",
+                                   datetime.datetime.now(),
+                                   orga_id
+                                )
             
 
             # Mise à jour de l'email
@@ -367,12 +383,11 @@ class UserController :
                 if new_email != us.findByUsername(username).email:
                     us.udao.updateEmail(username, new_email)
                     log.ldao.createLog("EDIT",
-                                        f"L'email de l'utilisateur {username} a été changé en {new_email} par {user_name_session}",
+                                        f"{username} a modifié son email par '{new_email}'",
                                         datetime.datetime.now(),
                                         orga_id
                                     )
                     message = "Utilisateur modifié avec succès."
-                return redirect(url_for('users', nom_orga=orga_name, message=message))
             else:
                 if not match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', new_email):
                     message = "Email non valide"
@@ -385,8 +400,28 @@ class UserController :
                     message = "Le nouvel email est similaire à un email existant (utilisé par " + user_with_email + ")"
             
             
+            # Mise à jour du numéro de téléphone
+            if new_phone_number not in existing_phone_number :
+                if new_phone_number != us.findByUsername(username).phone_number :
+                    us.udao.updatePhoneNumber(username,new_phone_number)
+                    log.ldao.createLog("EDIT",
+                                        f'{username} a modifié son numéro de téléphone par "{new_phone_number}"',
+                                        datetime.datetime.now(),
+                                        orga_id
+                                    )
+                    if "non valide" in message or "utilisé par" in message or message == "":
+                        message = "Utilisateur modifié avec succès."
+            else:
+                if new_phone_number in existing_phone_number :
+                    for user in us.findAll():
+                        if user.phone_number == new_phone_number :
+                            user_with_phone_number = user.username
+                            break
+                    
+                    message = f'Le nouveau numéro de téléphone est similaire à un numéro existant (utilisé par "{user_with_phone_number}")'
+
             return render_template('parametre.html',
-                                    metadata={'title': 'Modifier Utilisateur'},
+                                    metadata={'title': 'Configurer Utilisateur'},
                                     user=us.findByUsername(username),
                                     orga=orga_name,
                                     roles=available_roles,
@@ -410,7 +445,7 @@ class UserController :
             available_roles = us.udao.getAllRoles()
             
             # Affichage du formulaire pré-rempli
-            metadata = {'title': 'Modifier Utilisateur'}
+            metadata = {'title': 'Configurer Utilisateur'}
             return render_template('parametre.html', 
                                  metadata=metadata, 
                                  user=user,

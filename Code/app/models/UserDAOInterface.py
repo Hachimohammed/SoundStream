@@ -19,7 +19,7 @@ class UserDAOInterface :
         pass
 
     def updateEmail(self, username, new_email) -> None:
-        """ Update the email of a user """
+        """ Update the email of an user """
         pass
     
     def findUsersInOrganisation(self, organisation) -> list:
@@ -63,4 +63,8 @@ class UserDAOInterface :
 
     def findAllUsername(self) -> list[str]:
         """ Get all usernames """
+        pass
+
+    def updatePhoneNumber(self, username, new_phone_number) -> None:
+        """ Update the phone number of an user """
         pass

@@ -88,10 +88,10 @@ class UserDAO(UserDAOInterface):
         return None
 
     # ✅ CORRECTION : méthode déplacée À L'INTÉRIEUR de la classe (indentation correcte)
-    def updateEmail(self, username, email) -> None:
+    def updateEmail(self, username, new_email) -> None:
         """Update user email"""
         conn = self._getDbConnection()
-        conn.execute('UPDATE user SET email = ? WHERE username = ?', (email, username))
+        conn.execute('UPDATE user SET email = ? WHERE username = ?', (new_email, username))
         conn.commit()
         conn.close()
     
@@ -204,3 +204,10 @@ class UserDAO(UserDAOInterface):
         usernameList = [user['username'] for user in users]
         conn.close()
         return usernameList 
+    
+    def updatePhoneNumber(self, username, new_phone_number) :
+        """Update user phone number"""
+        conn = self._getDbConnection()
+        conn.execute('UPDATE user SET phone_number = ? WHERE username = ?', (new_phone_number, username))
+        conn.commit()
+        conn.close()
