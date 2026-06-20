@@ -211,3 +211,10 @@ class UserDAO(UserDAOInterface):
         conn.execute('UPDATE user SET phone_number = ? WHERE username = ?', (new_phone_number, username))
         conn.commit()
         conn.close()
+
+    def updateUsername(self, username, new_username) :
+        """Update username of an user"""
+        conn = self._getDbConnection()
+        conn.execute('UPDATE user SET username = ? WHERE username = ?', (new_username, username))
+        conn.commit()
+        conn.close()

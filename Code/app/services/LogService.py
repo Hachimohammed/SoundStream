@@ -1,5 +1,6 @@
 from app.models.LogDAO import LogSqliteDAO as LogDAO
 from typing import *
+from datetime import datetime
 
 class LogService:
     ''' This class will manipulate the log to give 
@@ -59,3 +60,7 @@ class LogService:
             list_logs.append(log.toDict())
 
         return list_logs
+    
+    def createLog(self, type_log: str, text_log: str, date_log: datetime , id_orga: int) :
+        ''' Insert a new log in the database '''
+        return self.ldao.createLog(type_log, text_log, date_log, id_orga)

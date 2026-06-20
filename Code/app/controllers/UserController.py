@@ -40,11 +40,11 @@ class UserController :
         if user_role != 'admin':
             if user_orga and len(user_orga) == 1:
                 us.deleteByUsername(username)
-                log.ldao.createLog("DELETE", f"l'utilisateur {username} a été supprimé de la base de données.",
+                log.createLog("DELETE", f"l'utilisateur {username} a été supprimé de la base de données.",
                                     datetime.datetime.now(), orga_id)
             elif user_orga and len(user_orga) > 1:
                 us.deleteUserOfOrganisation(username, orga_name)
-                log.ldao.createLog("DELETE", f"l'utilisateur {username} a été supprimé de l'organisation {orga_name}",
+                log.createLog("DELETE", f"l'utilisateur {username} a été supprimé de l'organisation {orga_name}",
                                     datetime.datetime.now(), orga_id)
             message = f"L'utilisateur {username} a été supprimé avec succès"
         else:
@@ -71,7 +71,7 @@ class UserController :
             
 
             # Récupérer tous les rôles disponibles pour validation
-            available_roles = us.udao.getAllRoles()
+            available_roles = us.getAllRoles()
 
 
             # Récupérer tous les emails existants pour validation
@@ -96,12 +96,12 @@ class UserController :
 
             # Mise à jour du mot de passe si fourni
             if new_password and new_password.strip():
-                us.udao.changePassword(username, new_password)
+                us.changePassword(username, new_password)
             
 
             user_name_session = session.get('username')
             orga_id = session.get('organisation_name')
-            log.ldao.createLog("EDIT",
+            log.createLog("EDIT",
                                f"Le mot de passe de l'utilisateur {username} a été changé par {user_name_session}",
                                datetime.datetime.now(),
                                orga_id
@@ -109,8 +109,8 @@ class UserController :
             
 
             # Mise à jour du rôle
-            us.udao.updateUserRole(username, new_role)
-            log.ldao.createLog("EDIT",
+            us.updateUserRole(username, new_role)
+            log.createLog("EDIT",
                                f"Le rôle de l'utilisateur {username} a été changé en {new_role} par {user_name_session}",
                                datetime.datetime.now(),
                                orga_id
@@ -120,8 +120,8 @@ class UserController :
             # Mise à jour de l'email
             if match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', new_email) and new_email not in existing_emails:
                 if new_email != us.findByUsername(username).email:
-                    us.udao.updateEmail(username, new_email)
-                    log.ldao.createLog("EDIT",
+                    us.updateEmail(username, new_email)
+                    log.createLog("EDIT",
                                         f"L'email de l'utilisateur {username} a été changé en '{new_email}' par {user_name_session}",
                                         datetime.datetime.now(),
                                         orga_id
@@ -142,8 +142,8 @@ class UserController :
             # Mise à jour du numéro de téléphone
             if new_phone_number not in existing_phone_number :
                 if new_phone_number != us.findByUsername(username).phone_number :
-                    us.udao.updatePhoneNumber(username, new_phone_number)
-                    log.ldao.createLog("EDIT",
+                    us.updatePhoneNumber(username, new_phone_number)
+                    log.createLog("EDIT",
                                         f"Le numéro de l'utilisateur {username} a été modifié en '{new_phone_number}' par {user_name_session}",
                                         datetime.datetime.now(),
                                         orga_id
@@ -185,7 +185,7 @@ class UserController :
                 orga_name = 'Harman_Kardon'
             
             # Récupérer tous les rôles disponibles
-            available_roles = us.udao.getAllRoles()
+            available_roles = us.getAllRoles()
             
             # Affichage du formulaire pré-rempli
             metadata = {'title': 'Modifier Utilisateur'}
@@ -213,7 +213,7 @@ class UserController :
             orga_name = session.get('organisation_name')
             
             # Récupérer tous les rôles disponibles pour validation
-            available_roles = us.udao.getAllRoles()
+            available_roles = us.getAllRoles()
             
             # Vérification du rôle
             if not role or role not in available_roles:
@@ -250,7 +250,7 @@ class UserController :
                     # Création de l'utilisateur
                     us.createUser(username, password, role, orga_name, email)
 
-                    log.ldao.createLog("ADD", f"l'utilisateur {username} a été implémenté dans la base de données.",
+                    log.createLog("ADD", f"l'utilisateur {username} a été implémenté dans la base de données.",
                                         datetime.datetime.now(), orga_id)
                 
                 message = f"L'utilisateur {username} a été créé avec succès"
@@ -284,7 +284,7 @@ class UserController :
                 orga_name = 'Harman_Kardon'
             
             # Récupérer tous les rôles disponibles
-            available_roles = us.udao.getAllRoles()
+            available_roles = us.getAllRoles()
             
             # Affichage du formulaire pré-rempli
             metadata = {'title': 'Ajouter Utilisateur'}
@@ -318,7 +318,7 @@ class UserController :
                 for orga in organisations:
                     orga_id = ogs.getIdByName(orga)
 
-                    log.ldao.createLog("TICKET",
+                    log.createLog("TICKET",
                                         f"Une demande de réinitialisation du mot de passe pour {username} a été effectuée",
                                         datetime.datetime.now(),
                                         orga_id
@@ -338,6 +338,7 @@ class UserController :
         
         if request.method == 'POST':
             # Récupération des données du formulaire
+            new_username = request.form.get('username')
             new_password = request.form.get('password')
             new_email = request.form.get('email')
             new_phone_number = request.form.get('phone_number')
@@ -346,7 +347,7 @@ class UserController :
 
 
             # Récupérer tous les rôles disponibles pour validation
-            available_roles = us.udao.getAllRoles()
+            available_roles = us.getAllRoles()
 
 
             # Récupérer tous les emails existants pour validation
@@ -360,18 +361,42 @@ class UserController :
             # Récupérer tous les numéros de téléphone pour validation
             existing_phone_number = [user.phone_number for user in us.findAll()]
             existing_phone_number.remove(us.findByUsername(username).phone_number)
+
+            # Récupérer tous les noms d'utilisateurs pour validation
+            existing_username = [user.username for user in us.findAll()]
+            existing_username.remove(username)
             
             if not orga_name:
                 orga_name = 'default'
 
             
             orga_id = session.get('organisation_name')
+
+            # Mise à jour du nom d'utilisateur
+            if new_username not in existing_username :
+                if new_username != username :
+                    us.updateUsername(username, new_username)
+                    session["username"] = new_username
+                    username = new_username
+                    log.createLog("EDIT",
+                                        f"{username} a remplacé son nom d'utilisateur par '{new_username}'",
+                                        datetime.datetime.now(),
+                                        orga_id
+                                    )
+                    message = "Utilisateur modifié avec succès."
+                else :
+                    for user in us.findAll():
+                        if user.username == new_username:
+                            user_with_username = user.username
+                            break
+                    
+                    message = "Le nouveau nom d'utilisateur est similaire à un nom existant (utilisé par " + user_with_username + ")"
             
 
             # Mise à jour du mot de passe si fourni
             if new_password and new_password.strip():
-                us.udao.changePassword(username, new_password)
-                log.ldao.createLog("EDIT",
+                us.changePassword(username, new_password)
+                log.createLog("EDIT",
                                    f"{username} a modifié son mot de passe",
                                    datetime.datetime.now(),
                                    orga_id
@@ -381,8 +406,8 @@ class UserController :
             # Mise à jour de l'email
             if match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', new_email) and new_email not in existing_emails:
                 if new_email != us.findByUsername(username).email:
-                    us.udao.updateEmail(username, new_email)
-                    log.ldao.createLog("EDIT",
+                    us.updateEmail(username, new_email)
+                    log.createLog("EDIT",
                                         f"{username} a modifié son email par '{new_email}'",
                                         datetime.datetime.now(),
                                         orga_id
@@ -403,8 +428,8 @@ class UserController :
             # Mise à jour du numéro de téléphone
             if new_phone_number not in existing_phone_number :
                 if new_phone_number != us.findByUsername(username).phone_number :
-                    us.udao.updatePhoneNumber(username,new_phone_number)
-                    log.ldao.createLog("EDIT",
+                    us.updatePhoneNumber(username,new_phone_number)
+                    log.createLog("EDIT",
                                         f'{username} a modifié son numéro de téléphone par "{new_phone_number}"',
                                         datetime.datetime.now(),
                                         orga_id
@@ -442,7 +467,7 @@ class UserController :
                 orga_name = 'Harman_Kardon'
             
             # Récupérer tous les rôles disponibles
-            available_roles = us.udao.getAllRoles()
+            available_roles = us.getAllRoles()
             
             # Affichage du formulaire pré-rempli
             metadata = {'title': 'Configurer Utilisateur'}

@@ -68,3 +68,7 @@ class UserDAOInterface :
     def updatePhoneNumber(self, username, new_phone_number) -> None:
         """ Update the phone number of an user """
         pass
+
+    def updateUsername(self, username, new_username) -> None :
+        """ Update the phone number of an user """
+        pass
