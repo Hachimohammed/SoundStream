@@ -312,17 +312,8 @@ class UserController :
                 from app.services.EmailService import send_reset_email
                 send_reset_email(email, user.username, new_password)
 
-                username = us.findByEmail(email).username
-                organisations = us.getOrganisationsByUsername(user.username)
-
-                for orga in organisations:
-                    orga_id = ogs.getIdByName(orga)
-
-                    log.createLog("TICKET",
-                                        f"Une demande de réinitialisation du mot de passe pour {username} a été effectuée",
-                                        datetime.datetime.now(),
-                                        orga_id
-                                    )
+                # Enregistre la demande dans la table forget_password et plus dans les logs
+                us.saveForgetPasswordRequest(user.id_user, new_password, 'demandée', datetime.datetime.now())
 
                 return render_template('forgotten.html', metadata=metadata, success="Un nouveau mot de passe a été envoyé à votre adresse mail.")
             else:

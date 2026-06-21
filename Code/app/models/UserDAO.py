@@ -218,3 +218,14 @@ class UserDAO(UserDAOInterface):
         conn.execute('UPDATE user SET username = ? WHERE username = ?', (new_username, username))
         conn.commit()
         conn.close()
+
+    def saveForgetPasswordRequest(self, id_user, new_password, forget_state, date_forget) -> None:
+        """Save a forget password request to the forget_password table"""
+        conn = self._getDbConnection()
+        query = '''
+            INSERT INTO forget_password (id_user, new_password, forget_state, date_forget)
+            VALUES (?, ?, ?, ?)
+        '''
+        conn.execute(query, (id_user, new_password, forget_state, date_forget))
+        conn.commit()
+        conn.close()

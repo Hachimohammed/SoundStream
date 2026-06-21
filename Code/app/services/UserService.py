@@ -82,3 +82,7 @@ class UserService():
     def updateUserRole(self, username, new_role) :
         """Update user role"""
         return self.udao.updateUserRole(username, new_role)
+
+    def saveForgetPasswordRequest(self, id_user, new_password, forget_state, date_forget):
+        """Save a forget password request to the forget_password table"""
+        return self.udao.saveForgetPasswordRequest(id_user, new_password, forget_state, date_forget)

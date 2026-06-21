@@ -65,32 +65,59 @@ class LogSqliteDAO(LogDAOInterface):
             return True
         
     def findTicketsByOrganization(self, id_orga: int) -> list[Log]:
-        ''' Return the list of the all the tickets logs by the organization id in argument'''
+        ''' Return the list of all the tickets from forget_password by the organization id '''
         
         conn = self._getDbConnection()
-        query = "SELECT * FROM log WHERE id_orga = ? AND type_log = 'TICKET' ORDER BY date_log DESC;"
+        query = """
+            SELECT fp.id_forget, fp.id_user, fp.new_password, fp.forget_state, fp.date_forget, u.username
+            FROM forget_password fp
+            JOIN user u ON fp.id_user = u.id_user
+            JOIN work_link wl ON u.id_user = wl.id_user
+            WHERE wl.id_orga = ?
+            ORDER BY fp.date_forget DESC;
+        """
 
         tickets = conn.execute(query, (id_orga,)).fetchall()
         tickets_instances = list()
 
         for ticket in tickets :
-            tickets_instances.append(Log(dict(ticket)))
+            log_dico = {
+                'id_log': ticket['id_forget'],
+                'type_log': 'TICKET',
+                'text_log': f"Une demande de réinitialisation du mot de passe pour {ticket['username']} a été effectuée",
+                'date_log': ticket['date_forget'],
+                'id_orga': id_orga
+            }
+            tickets_instances.append(Log(log_dico))
 
         conn.close()
 
         return tickets_instances
 
     def findAllTickets(self) -> list[Log]:
-        ''' Return the list of the all the tickets logs'''
+        ''' Return the list of all the tickets from forget_password '''
 
         conn = self._getDbConnection()
-        query = "SELECT * FROM log WHERE type_log = 'TICKET' ORDER BY date_log DESC;"
+        query = """
+            SELECT fp.id_forget, fp.id_user, fp.new_password, fp.forget_state, fp.date_forget, u.username, wl.id_orga
+            FROM forget_password fp
+            JOIN user u ON fp.id_user = u.id_user
+            LEFT JOIN work_link wl ON u.id_user = wl.id_user
+            ORDER BY fp.date_forget DESC;
+        """
 
         tickets = conn.execute(query).fetchall()
         tickets_instances = list()
 
         for ticket in tickets :
-            tickets_instances.append(Log(dict(ticket)))
+            log_dico = {
+                'id_log': ticket['id_forget'],
+                'type_log': 'TICKET',
+                'text_log': f"Une demande de réinitialisation du mot de passe pour {ticket['username']} a été effectuée",
+                'date_log': ticket['date_forget'],
+                'id_orga': ticket['id_orga'] if ticket['id_orga'] is not None else 0
+            }
+            tickets_instances.append(Log(log_dico))
 
         conn.close()
 
