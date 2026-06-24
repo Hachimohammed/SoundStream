@@ -38,12 +38,12 @@ Voici les rapports d'analyse des différents projets (un document par projet) :
 
 | Prénom | Nombre d'heures | Pourcentage |
 | :--- | :---: | :---: |
-| **Kadir** | 43h | 22.4% |
-| **Saif-eddine** | 33h | 17.2% |
-| **Aboubakry** | 44h | 22.9% |
-| **Mohammed** | 39h | 20.3% |
-| **Nassim** | 33h | 17.2% |
-| **Total** | **192h** | **100%** |
+| **Kadir** | 43h | 21.6% |
+| **Saif-eddine** | 37h | 18.6% |
+| **Aboubakry** | 44h | 22.1% |
+| **Mohammed** | 40h | 20.1% |
+| **Nassim** | 35h | 17.6% |
+| **Total** | **199h** | **100%** |
 
     
  
