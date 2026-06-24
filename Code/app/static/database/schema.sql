@@ -126,7 +126,8 @@ CREATE TABLE IF NOT EXISTS planned(
 );
 
 CREATE TABLE IF NOT EXISTS forget_password(
-   id_user INT PRIMARY KEY,
+   id_forget INTEGER PRIMARY KEY,
+   id_user INT NOT NULL,
    new_password TEXT NOT NULL,
    forget_state TEXT NOT NULL,
    date_forget DATETIME NOT NULL,

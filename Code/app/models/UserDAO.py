@@ -88,10 +88,10 @@ class UserDAO(UserDAOInterface):
         return None
 
     # ✅ CORRECTION : méthode déplacée À L'INTÉRIEUR de la classe (indentation correcte)
-    def updateEmail(self, username, email) -> None:
+    def updateEmail(self, username, new_email) -> None:
         """Update user email"""
         conn = self._getDbConnection()
-        conn.execute('UPDATE user SET email = ? WHERE username = ?', (email, username))
+        conn.execute('UPDATE user SET email = ? WHERE username = ?', (new_email, username))
         conn.commit()
         conn.close()
     
@@ -204,3 +204,28 @@ class UserDAO(UserDAOInterface):
         usernameList = [user['username'] for user in users]
         conn.close()
         return usernameList 
+    
+    def updatePhoneNumber(self, username, new_phone_number) :
+        """Update user phone number"""
+        conn = self._getDbConnection()
+        conn.execute('UPDATE user SET phone_number = ? WHERE username = ?', (new_phone_number, username))
+        conn.commit()
+        conn.close()
+
+    def updateUsername(self, username, new_username) :
+        """Update username of an user"""
+        conn = self._getDbConnection()
+        conn.execute('UPDATE user SET username = ? WHERE username = ?', (new_username, username))
+        conn.commit()
+        conn.close()
+
+    def saveForgetPasswordRequest(self, id_user, new_password, forget_state, date_forget) -> None:
+        """Save a forget password request to the forget_password table"""
+        conn = self._getDbConnection()
+        query = '''
+            INSERT INTO forget_password (id_user, new_password, forget_state, date_forget)
+            VALUES (?, ?, ?, ?)
+        '''
+        conn.execute(query, (id_user, new_password, forget_state, date_forget))
+        conn.commit()
+        conn.close()

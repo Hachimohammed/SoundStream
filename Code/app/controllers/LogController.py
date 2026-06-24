@@ -22,7 +22,8 @@ class LogController:
         metadata = {'title': 'log'}
         types_log = log.getTypesLog()
         types_log.insert(0, 'all')  # Ajouter l'option "all" pour afficher tous les types de logs
-        types_log.remove('TICKET')  # Supprimer le type "TICKET" de la liste des types de logs pour le filtrage
+        if 'TICKET' in types_log:
+            types_log.remove('TICKET')  # Supprimer le type "TICKET" de la liste des types de logs pour le filtrage
 
         selected_type = request.args.get('type', 'all')  # Récupérer le type sélectionné dans les paramètres de la requête ; par défaut 'all'
         

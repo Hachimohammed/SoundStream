@@ -46,9 +46,9 @@ class UserService():
         """Get user by email"""
         return self.udao.findByEmail(email)
 
-    def updateEmail(self, username, email):
+    def updateEmail(self, username, new_email):
         """Update user email"""
-        return self.udao.updateEmail(username, email)
+        return self.udao.updateEmail(username, new_email)
 
     def changePassword(self, username, password):
         """Change user password"""
@@ -66,3 +66,23 @@ class UserService():
         conn.close()
     #    Retourne une liste d'emails des admins de l'organisation, en filtrant les entrées nulles
         return [r['email'] for r in res if r['email']]
+    
+    def updatePhoneNumber(self, username, new_phone_number) :
+        """Change user phone number"""
+        return self.udao.updatePhoneNumber(username, new_phone_number)
+
+    def updateUsername(self, username, new_username) :
+        """Change username of an user"""
+        return self.udao.updateUsername(username, new_username)
+
+    def getAllRoles(self):
+        """Get all available roles from the role table"""
+        return self.udao.getAllRoles()
+
+    def updateUserRole(self, username, new_role) :
+        """Update user role"""
+        return self.udao.updateUserRole(username, new_role)
+
+    def saveForgetPasswordRequest(self, id_user, new_password, forget_state, date_forget):
+        """Save a forget password request to the forget_password table"""
+        return self.udao.saveForgetPasswordRequest(id_user, new_password, forget_state, date_forget)
