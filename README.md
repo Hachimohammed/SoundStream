@@ -34,6 +34,17 @@ Voici les rapports d'analyse des différents projets (un document par projet) :
 
 - [ ] Ajouter le fichier Excel avant la soutenance.
 
+### Répartition du temps de travail
+
+| Prénom | Nombre d'heures | Pourcentage |
+| :--- | :---: | :---: |
+| **Kadir** | 43h | 22.4% |
+| **Saif-eddine** | 33h | 17.2% |
+| **Aboubakry** | 44h | 22.9% |
+| **Mohammed** | 39h | 20.3% |
+| **Nassim** | 33h | 17.2% |
+| **Total** | **192h** | **100%** |
+
     
  
 
