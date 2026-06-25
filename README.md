@@ -30,9 +30,9 @@ Voici les rapports d'analyse des différents projets (un document par projet) :
 
 ---
 
-###  Tâches à réaliser
+###  Fiche de route
 
-- [ ] Ajouter le fichier Excel avant la soutenance.
+- https://docs.google.com/spreadsheets/d/1rvGg9ZLbrMu3VHVGODL9qG-r46bRnFaCuX4gCNIrTBQ
 
 ### Répartition du temps de travail
 
